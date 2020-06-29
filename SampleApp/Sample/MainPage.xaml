@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Sample.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:slider="clr-namespace:Devhouse.GradientSlider.Abstractions;assembly=Devhouse.GradientSlider.Abstractions"
+    Padding="0,80,0,0"
+    BackgroundColor="White"
+    mc:Ignorable="d">
+    <StackLayout>
+        <!-- Place new controls here -->
+        <slider:CustomGradientSlider
+            HasSegment="True"
+            HeightRequest="{OnPlatform Android='42',
+                                       iOS='12'}"
+            Interval="25"
+            MaxIntervaImageSource="whitePoint"
+            Maximum="100"
+            MinIntervaImageSource="bluePoint"
+            Minimum="0"
+            TrackColor="#F9F9F9"
+            TrackEndColor="#6078EA"
+            TrackStartColor="#17EAD9" />
+    </StackLayout>
+</ContentPage>
