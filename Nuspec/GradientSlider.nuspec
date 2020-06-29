@@ -6,7 +6,7 @@
     <title>GradientSlider for Xamarin.Forms</title>
     <authors>Hassan Tariq, Ali Ahmad, Saif Ur Rehman, Umair Ahmad</authors>
     <owners>Devhouse.co</owners>
-    <projectUrl>https://github.com/aliahmad866/GradientPages</projectUrl>
+    <projectUrl>https://github.com/devhouseco/GradientSlider</projectUrl>
     <icon>slider_icon.png</icon>
     <license type="file">LICENSE.txt</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -35,14 +35,14 @@
     <file src="..\GradientSlider\GradientSlider.Abstractions\bin\Release\netstandard2.0\Devhouse.GradientSlider.Abstractions.dll" target="lib\netstandard2.0"/>
 
     <!-- Android reference assemblies -->
-    <file src="..\GradientSlider\GradientSlider.Abstractions\bin\Release\netstandard2.0\Devhouse.GradientSlider.Abstractions.dll" target="lib\MonoAndroid"/>
+    <file src="..\GradientSlider\GradientSlider.Android\bin\Release\Devhouse.GradientSlider.Abstractions.dll" target="lib\MonoAndroid"/>
 
 <!--     <file src="..\GradientPages\GradientPages.Android\bin\Release\GradientPages.Abstractions.dll" target="lib\MonoAndroid"/> -->
 
     <file src="..\GradientSlider\GradientSlider.Android\bin\Release\Devhouse.GradientSlider.Droid.dll" target="lib\MonoAndroid"/>
 
     <!-- iOS reference assemblies -->
-    <file src="..\GradientSlider\GradientSlider.Abstractions\bin\Release\netstandard2.0\Devhouse.GradientSlider.Abstractions.dll" target="lib\Xamarin.iOS10" />
+    <file src="..\GradientSlider\GradientSlider.iOS\bin\Release\Devhouse.GradientSlider.Abstractions.dll" target="lib\Xamarin.iOS10" />
 
 <!--     <file src="..\GradientPages\GradientPages.iOS\bin\Release\GradientPages.Abstractions.dll" target="lib\Xamarin.iOS10" /> -->
 
