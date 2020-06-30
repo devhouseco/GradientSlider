@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata minClientVersion="2.8.3">
     <id>GradientSlider</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>GradientSlider for Xamarin.Forms</title>
     <authors>Hassan Tariq, Ali Ahmad, Saif Ur Rehman, Umair Ahmad</authors>
     <owners>Devhouse.co</owners>
@@ -22,7 +22,7 @@
     <tags>gradient slider custom slider interval slider</tags>
     <dependencies>
       <group>
-        <dependency id="Xamarin.Forms" version="4.6.0.967"/>
+        <dependency id="Xamarin.Forms" version="4.5.0.495"/>
       </group>
     </dependencies>
   </metadata>
