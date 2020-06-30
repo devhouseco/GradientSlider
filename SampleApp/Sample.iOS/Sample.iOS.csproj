@@ -140,5 +140,10 @@
       <Name>GradientSlider.iOS</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Oval.png" />
+    <BundleResource Include="Resources\user.png" />
+    <BundleResource Include="Resources\correct.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

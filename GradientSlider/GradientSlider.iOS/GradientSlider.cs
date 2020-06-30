@@ -120,13 +120,14 @@ namespace Devhouse.GradientSlider.iOS
         public UIImage GetThumbImage(CGRect rect, int value)
         {
             var mainThumb = new CALayer();
-            var myImage = new UIImage("Oval.png");
+            var iconName = (control.ThumbImageSource as FileImageSource).File;
+            var myImage = new UIImage(iconName);
             mainThumb.Contents = myImage.CGImage;
             mainThumb.Frame = rect;
             var textlayer = new CATextLayer();
-            textlayer.FontSize = 16;
+            textlayer.FontSize = (nfloat)control.ThumbTextFontSize;
             textlayer.TextAlignmentMode = CATextLayerAlignmentMode.Center;
-            textlayer.String = value.ToString();
+            textlayer.String = String.Format(control.ThumbTextFormat, value);
             textlayer.Wrapped = true;
             textlayer.TextTruncationMode = CATextLayerTruncationMode.End;
             //textlayer.BackgroundColor = UIColor.White.CGColor;
