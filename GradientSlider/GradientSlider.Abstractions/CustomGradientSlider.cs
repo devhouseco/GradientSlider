@@ -54,6 +54,20 @@ namespace Devhouse.GradientSlider.Abstractions
         returnType: typeof(string),
         declaringType: typeof(CustomGradientSlider));
 
+        public static readonly BindableProperty ThumbTextFormatProperty =
+            BindableProperty.Create(
+                propertyName: nameof(ThumbTextFormat),
+                returnType: typeof(string),
+                declaringType: typeof(CustomGradientSlider),
+                defaultValue: "{0}");
+
+        public static readonly BindableProperty ThumbTextFontSizeProperty =
+            BindableProperty.Create(
+                propertyName: nameof(ThumbTextFontSize),
+                returnType: typeof(double),
+                declaringType: typeof(CustomGradientSlider),
+                defaultValue: 12.0);
+
         #endregion
 
         #region Get Set's
@@ -98,6 +112,18 @@ namespace Devhouse.GradientSlider.Abstractions
         {
             get { return (string)GetValue(MaxIntervaImageSourceProperty); }
             set { SetValue(MaxIntervaImageSourceProperty, value); }
+        }
+
+        public string ThumbTextFormat
+        {
+            get { return (string)GetValue(ThumbTextFormatProperty); }
+            set { SetValue(ThumbTextFormatProperty, value); }
+        }
+
+        public double ThumbTextFontSize
+        {
+            get { return (double)GetValue(ThumbTextFontSizeProperty); }
+            set { SetValue(ThumbTextFontSizeProperty, value); }
         }
 
         #endregion

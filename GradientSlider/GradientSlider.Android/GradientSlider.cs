@@ -37,6 +37,8 @@ namespace Devhouse.GradientSlider.Droid
             base.OnElementChanged(e);
 
             control = (CustomGradientSlider)Element;
+
+
         }
 
         private void Element_ValueChanged(object sender, ValueChangedEventArgs e)
@@ -74,7 +76,7 @@ namespace Devhouse.GradientSlider.Droid
 
         public Drawable GetThumb(int progress)
         {
-            ((TextView)thumbView.FindViewById(Resource.Id.thumbText)).SetText(progress.ToString(), BufferType.Normal);
+            ((TextView)thumbView.FindViewById(Resource.Id.thumbText)).SetText(String.Format(control.ThumbTextFormat, progress), BufferType.Normal);
 
             thumbView.Measure((int)MeasureSpecMode.Unspecified, (int)MeasureSpecMode.Unspecified);
             Bitmap bitmap = Bitmap.CreateBitmap(thumbView.MeasuredWidth, thumbView.MeasuredHeight, Bitmap.Config.Argb8888);
@@ -175,14 +177,21 @@ namespace Devhouse.GradientSlider.Droid
                 thumbView = inflater.Inflate(Resource.Layout.layout_seekbar_thumb, null, false);
 
                 var thumbText = ((TextView)thumbView.FindViewById(Resource.Id.thumbText));
-                thumbText.TextSize = 16f;
+                thumbText.TextSize = (float)control.ThumbTextFontSize;
                 thumbText.SetTextColor(Android.Graphics.Color.White);
 
+                var iconName = (control.ThumbImageSource as FileImageSource).File;
+
                 var thumbViewIcon = ((LinearLayout)thumbView.FindViewById(Resource.Id.seekBarIcon));
-                thumbViewIcon.SetBackgroundDrawable(Android.App.Application.Context.GetDrawable(Resource.Drawable.Oval));
+                thumbViewIcon.SetBackgroundDrawable(Android.App.Application.Context.GetDrawable(iconName));
 
                 isInitilized = true;
-                ChangeIntervalIcon();
+
+                if (control.HasSegment)
+                    ChangeIntervalIcon();
+
+                Element_ValueChanged(this,new ValueChangedEventArgs(Element.Value,Element.Value));
+
             }
         }
     }

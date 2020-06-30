@@ -22,6 +22,8 @@
             Minimum="0"
             TrackColor="#F9F9F9"
             TrackEndColor="#6078EA"
-            TrackStartColor="#17EAD9" />
+            TrackStartColor="#17EAD9"
+            ThumbImageSource="correct"
+            ThumbTextFormat="${0}"/>
     </StackLayout>
 </ContentPage>
