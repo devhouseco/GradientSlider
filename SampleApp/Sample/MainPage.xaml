@@ -10,8 +10,10 @@
     BackgroundColor="White"
     mc:Ignorable="d">
     <StackLayout>
+        <Button Text="reset" Clicked="Button_Clicked" />
         <!-- Place new controls here -->
         <slider:CustomGradientSlider
+            x:Name="slider"
             HasSegment="True"
             HeightRequest="{OnPlatform Android='42',
                                        iOS='12'}"
@@ -20,10 +22,11 @@
             Maximum="100"
             MinIntervaImageSource="bluePoint"
             Minimum="0"
+            Value="50"
             TrackColor="#F9F9F9"
             TrackEndColor="#6078EA"
             TrackStartColor="#17EAD9"
-            ThumbImageSource="correct"
+            ThumbImageSource="Oval"
             ThumbTextFormat="${0}"/>
     </StackLayout>
 </ContentPage>
