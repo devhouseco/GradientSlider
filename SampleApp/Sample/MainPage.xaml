@@ -27,6 +27,7 @@
             TrackEndColor="#6078EA"
             TrackStartColor="#17EAD9"
             ThumbImageSource="Oval"
-            ThumbTextFormat="${0}"/>
+            ThumbTextFormat="${0}"
+            HasShadow="True"/>
     </StackLayout>
 </ContentPage>

@@ -158,26 +158,35 @@ namespace Devhouse.GradientSlider.Droid
                     }
                 }
 
-                var drawables = new List<Drawable> { shadow,background, p };
+                var drawables = new List<Drawable> { background, p };
+
+                if (control.HasShadow)
+                    drawables.Insert(0, shadow);
+
                 drawables.AddRange(shapes);
                 var pd = new LayerDrawable(drawables.ToArray());
 
-                pd.SetLayerHeight(0, (int)heightPx + 3);
+                if (control.HasShadow)
+                    pd.SetLayerHeight(0, (int)heightPx + 3);
 
-                pd.SetLayerHeight(1, (int)heightPx);
-                pd.SetLayerHeight(2, (int)heightPx);
-                pd.SetLayerWidth(2, (int)gradientWidth);
+                pd.SetLayerHeight(drawables.IndexOf(background), (int)heightPx);
+                pd.SetLayerHeight(drawables.IndexOf(p), (int)heightPx);
+                pd.SetLayerWidth(drawables.IndexOf(p), (int)gradientWidth);
 
+                int intervalStartsFrom = 2;
+
+                if (control.HasShadow)
+                    intervalStartsFrom = 3;
 
                 if (control.HasSegment)
                 {
                     var segmentDelay = (width - (int)40.0f.DpToPixels(Context)) / (int)(Element.Maximum / (int)control.Interval);
 
-                    for (int i = 3; i < drawables.Count; i++)
+                    for (int i = intervalStartsFrom; i < drawables.Count; i++)
                     {
                         pd.SetLayerHeight(i, (int)5.0f.DpToPixels(Context));
                         pd.SetLayerWidth(i, (int)5.0f.DpToPixels(Context));
-                        pd.SetLayerInset(i, i == 3 ? 10 : i == drawables.Count - 1 ? ((i - 3) * segmentDelay) - (int)10.0f.DpToPixels(Context) : (i - 3) * segmentDelay, (int)4.0f.DpToPixels(Context), 0, 0);
+                        pd.SetLayerInset(i, i == intervalStartsFrom ? 10 : i == drawables.Count - 1 ? ((i - intervalStartsFrom) * segmentDelay) - (int)10.0f.DpToPixels(Context) : (i - intervalStartsFrom) * segmentDelay, (int)4.0f.DpToPixels(Context), 0, 0);
                     }
                 }
 
