@@ -144,6 +144,11 @@ namespace Devhouse.GradientSlider.Droid
 
                 var shapes = new List<Drawable>();
 
+                var shadow = new GradientDrawable();
+                shadow.SetColor(Android.Graphics.Color.ParseColor("#E8E8E8"));
+                shadow.SetCornerRadius(cornerRadiusInPx);
+                shadow.SetGradientRadius(40f);
+
                 if (control.HasSegment)
                 {
                     for (int i = 0; i < ((int)(Element.Maximum / control.Interval)) + 1; i++)
@@ -153,26 +158,26 @@ namespace Devhouse.GradientSlider.Droid
                     }
                 }
 
-                var drawables = new List<Drawable> { background, p };
+                var drawables = new List<Drawable> { shadow,background, p };
                 drawables.AddRange(shapes);
                 var pd = new LayerDrawable(drawables.ToArray());
 
-                pd.SetLayerHeight(0, (int)heightPx);
+                pd.SetLayerHeight(0, (int)heightPx + 3);
+
                 pd.SetLayerHeight(1, (int)heightPx);
-                pd.SetId(1, 999);
-                pd.SetLayerWidth(1, (int)gradientWidth);
+                pd.SetLayerHeight(2, (int)heightPx);
+                pd.SetLayerWidth(2, (int)gradientWidth);
 
 
                 if (control.HasSegment)
                 {
                     var segmentDelay = (width - (int)40.0f.DpToPixels(Context)) / (int)(Element.Maximum / (int)control.Interval);
 
-                    for (int i = 2; i < drawables.Count; i++)
+                    for (int i = 3; i < drawables.Count; i++)
                     {
                         pd.SetLayerHeight(i, (int)5.0f.DpToPixels(Context));
                         pd.SetLayerWidth(i, (int)5.0f.DpToPixels(Context));
-                        pd.SetLayerInset(i, i == 2 ? 10 : i == drawables.Count - 1 ? ((i - 2) * segmentDelay) - (int)10.0f.DpToPixels(Context) : (i - 2) * segmentDelay, (int)4.0f.DpToPixels(Context), 0, 0);
-                        pd.SetId(i, 998 + i);
+                        pd.SetLayerInset(i, i == 3 ? 10 : i == drawables.Count - 1 ? ((i - 3) * segmentDelay) - (int)10.0f.DpToPixels(Context) : (i - 3) * segmentDelay, (int)4.0f.DpToPixels(Context), 0, 0);
                     }
                 }
 
