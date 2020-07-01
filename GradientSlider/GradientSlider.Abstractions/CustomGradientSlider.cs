@@ -68,6 +68,13 @@ namespace Devhouse.GradientSlider.Abstractions
                 declaringType: typeof(CustomGradientSlider),
                 defaultValue: 12.0);
 
+        public static readonly BindableProperty HasShadowProperty =
+            BindableProperty.Create(
+                propertyName: nameof(HasShadow),
+                returnType: typeof(bool),
+                declaringType: typeof(CustomGradientSlider),
+                defaultValue: false);
+
         #endregion
 
         #region Get Set's
@@ -124,6 +131,12 @@ namespace Devhouse.GradientSlider.Abstractions
         {
             get { return (double)GetValue(ThumbTextFontSizeProperty); }
             set { SetValue(ThumbTextFontSizeProperty, value); }
+        }
+
+        public bool HasShadow
+        {
+            get { return (bool)GetValue(HasShadowProperty); }
+            set { SetValue(HasShadowProperty, value); }
         }
 
         #endregion

@@ -46,10 +46,14 @@ namespace Devhouse.GradientSlider.iOS
                 Control.SetMinTrackImage(GetGradientImage(gradientWidth, rect.Size, new CGColor[] { control.TrackStartColor.ToCGColor(), control.TrackEndColor.ToCGColor() }), UIControlState.Normal);
                 Control.SetMaxTrackImage(GetGradientImage(Control.Frame.Size.Width, rect.Size, new CGColor[] { control.TrackColor.ToCGColor(), control.TrackColor.ToCGColor() }), UIControlState.Normal);
                 Control.SetThumbImage(GetThumbImage(new CGRect(0, 0, 30, 30), (int)Control.Value), UIControlState.Normal);
-                Control.Layer.ShadowPath = UIBezierPath.FromRoundedRect(rect,2).CGPath;
-                Control.Layer.ShadowRadius = 5;
-                Control.Layer.ShadowOffset = CGSize.Empty;
-                Control.Layer.ShadowOpacity = 0.4f;
+
+                if (control.HasShadow)
+                {
+                    Control.Layer.ShadowPath = UIBezierPath.FromRoundedRect(rect, 2).CGPath;
+                    Control.Layer.ShadowRadius = 2;
+                    Control.Layer.ShadowOffset = CGSize.Empty;
+                    Control.Layer.ShadowOpacity = 0.2f;
+                }
             }
             catch
             {
