@@ -37,8 +37,7 @@ namespace Devhouse.GradientSlider.Droid
             base.OnElementChanged(e);
 
             control = (CustomGradientSlider)Element;
-
-
+            Element.ValueChanged += Element_ValueChanged;
         }
 
         private void Element_ValueChanged(object sender, ValueChangedEventArgs e)
@@ -57,10 +56,17 @@ namespace Devhouse.GradientSlider.Droid
             thumb.SetBounds(thumb.Bounds.Left, thumbTop + 7, thumb.Bounds.Left + thumb.IntrinsicWidth, thumb.Bounds.Bottom);
             var gradientWidth = ((Control.Width - 45) / Element.Maximum) * value;
             var pd = (LayerDrawable)Control.ProgressDrawable;
-            pd.SetLayerWidth(1, (int)gradientWidth);
+            //var gradientLayer = pd.FindDrawableByLayerId(999);
+            //pd.SetDrawableByLayerId(999,gradientLayer);
+            //pd.SetLayerWidth(1, (int)gradientWidth);
+            //pd.InvalidateDrawable(gradientLayer);
+            //Control.Invalidate();
+            var layerWidth = pd.GetLayerWidth(1);
+            if (layerWidth == 0 || layerWidth != (int)gradientWidth)
+                InitilizeSeekBar(Control.Width);
 
-            if (control.HasSegment.Equals(true))
-                ChangeIntervalIcon();
+            //if (control.HasSegment.Equals(true))
+                //ChangeIntervalIcon();
         }
 
         void ChangeIntervalIcon()
@@ -124,7 +130,7 @@ namespace Devhouse.GradientSlider.Droid
                 var cornerRadiusInPx = ((float)(slider.HeightRequest / 2.0)).DpToPixels(Context);
                 var heightPx = (12.0f).DpToPixels(Context);
 
-                var gradientWidth = (width / (int)Element.Maximum) * Element.Value;
+                var gradientWidth = ((width - 45) / Element.Maximum) * Element.Value;
 
                 //create minimum track
                 var p = new GradientDrawable(GradientDrawable.Orientation.LeftRight, new int[] { startColor, endColor });
@@ -142,7 +148,7 @@ namespace Devhouse.GradientSlider.Droid
                 {
                     for (int i = 0; i < ((int)(Element.Maximum / control.Interval)) + 1; i++)
                     {
-                        var shapeDrawable = Android.App.Application.Context.GetDrawable(Resource.Drawable.bluePoint);
+                        var shapeDrawable = i * control.Interval < Element.Value ? Android.App.Application.Context.GetDrawable(Resource.Drawable.whitePoint) : Android.App.Application.Context.GetDrawable(Resource.Drawable.bluePoint);
                         shapes.Add(shapeDrawable);
                     }
                 }
@@ -153,6 +159,7 @@ namespace Devhouse.GradientSlider.Droid
 
                 pd.SetLayerHeight(0, (int)heightPx);
                 pd.SetLayerHeight(1, (int)heightPx);
+                pd.SetId(1, 999);
                 pd.SetLayerWidth(1, (int)gradientWidth);
 
 
@@ -170,9 +177,8 @@ namespace Devhouse.GradientSlider.Droid
                 }
 
                 Control.ProgressDrawable = pd;
-                Control.Progress = Control.Progress + 1;
-                Control.Progress = Control.Progress - 1;
-                Element.ValueChanged += Element_ValueChanged;
+                //Control.Progress = Control.Progress + 1;
+                //Control.Progress = Control.Progress - 1;
                 LayoutInflater inflater = (LayoutInflater)Android.App.Application.Context.GetSystemService(Context.LayoutInflaterService);
                 thumbView = inflater.Inflate(Resource.Layout.layout_seekbar_thumb, null, false);
 
@@ -190,7 +196,7 @@ namespace Devhouse.GradientSlider.Droid
                 if (control.HasSegment)
                     ChangeIntervalIcon();
 
-                Element_ValueChanged(this,new ValueChangedEventArgs(Element.Value,Element.Value));
+                //Element_ValueChanged(this,new ValueChangedEventArgs(Element.Value,Element.Value));
 
             }
         }

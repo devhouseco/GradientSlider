@@ -3,6 +3,7 @@ using CoreAnimation;
 using CoreGraphics;
 using Devhouse.GradientSlider.Abstractions;
 using Devhouse.GradientSlider.iOS;
+using Foundation;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -45,6 +46,10 @@ namespace Devhouse.GradientSlider.iOS
                 Control.SetMinTrackImage(GetGradientImage(gradientWidth, rect.Size, new CGColor[] { control.TrackStartColor.ToCGColor(), control.TrackEndColor.ToCGColor() }), UIControlState.Normal);
                 Control.SetMaxTrackImage(GetGradientImage(Control.Frame.Size.Width, rect.Size, new CGColor[] { control.TrackColor.ToCGColor(), control.TrackColor.ToCGColor() }), UIControlState.Normal);
                 Control.SetThumbImage(GetThumbImage(new CGRect(0, 0, 30, 30), (int)Control.Value), UIControlState.Normal);
+                Control.Layer.ShadowPath = UIBezierPath.FromRoundedRect(rect,2).CGPath;
+                Control.Layer.ShadowRadius = 5;
+                Control.Layer.ShadowOffset = CGSize.Empty;
+                Control.Layer.ShadowOpacity = 0.4f;
             }
             catch
             {
@@ -52,25 +57,26 @@ namespace Devhouse.GradientSlider.iOS
                 Control.MaximumTrackTintColor = control.TrackColor.ToUIColor();
             }
             //Control.Continuous = false;
-            Control.ValueChanged += Control_ValueChanged;
+            Element.ValueChanged += Control_ValueChanged;
             base.Draw(rect);
         }
 
         private void Control_ValueChanged(object sender, EventArgs e)
         {
-            var value = (int)(Math.Round(Control.Value / control.Interval) * control.Interval);
+            var value = (int)Control.Value;
             nfloat gradientWidth;
 
             if (control.HasSegment)
             {
-                Control.SetValue(value, false);
+                value = (int)(Math.Round(Control.Value / control.Interval) * control.Interval);
                 gradientWidth = (Control.Frame.Size.Width / (int)Element.Maximum) * value;
             }
             else
             {
-                value = (int)Control.Value;
                 gradientWidth = (Control.Frame.Size.Width / (int)Element.Maximum) * value;
             }
+
+            Control.SetValue(value, false);
 
             try
             {
