@@ -74,12 +74,12 @@ namespace Devhouse.GradientSlider.Droid
             base.OnLayout(changed, l, t, r, b);
             InitilizeSeekBar(r);
             Control.SplitTrack = false;
-            Control.SetMinimumHeight(12);
+            //Control.SetMinimumHeight(12);
             var thumb = Control.Thumb;
             Control.SetPadding((int)20.0f.DpToPixels(Context), thumb.IntrinsicHeight / 2, (int)20.0f.DpToPixels(Context), thumb.IntrinsicHeight / 2);
             int thumbTop = thumb.IntrinsicHeight - b;
             var bounds = new Rect(thumb.Bounds.Left, thumbTop + 7, thumb.Bounds.Left + thumb.IntrinsicWidth, thumb.Bounds.Bottom);
-            thumb.SetBounds(bounds.Left, bounds.Top, bounds.Right, bounds.Bottom);
+            //thumb.SetBounds(bounds.Left, bounds.Top, bounds.Right, bounds.Bottom);
         }
 
         void InitilizeSeekBar(int width)
