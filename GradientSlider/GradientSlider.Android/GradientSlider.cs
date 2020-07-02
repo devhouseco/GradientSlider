@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
@@ -53,7 +54,7 @@ namespace Devhouse.GradientSlider.Droid
             var pd = (LayerDrawable)Control.ProgressDrawable;
             var layerWidth = pd.GetLayerWidth(1);
             if (layerWidth == 0 || layerWidth != (int)gradientWidth)
-                InitilizeSeekBar(Control.Width);
+                InitilizeSeekBar(Control.Width, true);
         }
 
         public Drawable GetThumb(int progress)
@@ -72,17 +73,17 @@ namespace Devhouse.GradientSlider.Droid
         protected override void OnLayout(bool changed, int l, int t, int r, int b)
         {
             base.OnLayout(changed, l, t, r, b);
-            InitilizeSeekBar(r);
+            InitilizeSeekBar(Control.Width);
             Control.SplitTrack = false;
-            //Control.SetMinimumHeight(12);
             var thumb = Control.Thumb;
-            Control.SetPadding((int)20.0f.DpToPixels(Context), thumb.IntrinsicHeight / 2, (int)20.0f.DpToPixels(Context), thumb.IntrinsicHeight / 2);
-            int thumbTop = thumb.IntrinsicHeight - b;
-            var bounds = new Rect(thumb.Bounds.Left, thumbTop + 7, thumb.Bounds.Left + thumb.IntrinsicWidth, thumb.Bounds.Bottom);
-            //thumb.SetBounds(bounds.Left, bounds.Top, bounds.Right, bounds.Bottom);
+            Control.SetMinimumHeight(thumb.IntrinsicHeight);
+            //var paddingTopBottom = (thumb.IntrinsicHeight - 12) / 2;
+            Control.SetPadding((int)20.0f.DpToPixels(Context), 0, (int)20.0f.DpToPixels(Context), 0);
+            int thumbTop = (int)((thumb.IntrinsicHeight - 12f.DpToPixels(Context)) / 2);
+            thumb.SetBounds(0, 0, thumb.Bounds.Left + thumb.IntrinsicWidth, thumb.IntrinsicHeight);
         }
 
-        void InitilizeSeekBar(int width)
+        void InitilizeSeekBar(int width, bool valueChnaged = false)
         {
 
             if (Control != null)
@@ -168,7 +169,14 @@ namespace Devhouse.GradientSlider.Droid
                 var thumbViewIcon = ((LinearLayout)thumbView.FindViewById(Resource.Id.seekBarIcon));
                 thumbViewIcon.SetBackgroundDrawable(Android.App.Application.Context.GetDrawable(iconName));
 
-                Control.SetThumb(GetThumb((int)Element.Value));
+                var thumb = GetThumb((int)Element.Value);
+
+                Control.SetThumb(thumb);
+
+                if (valueChnaged)
+                    thumb.SetBounds(thumb.Bounds.Left, 0, thumb.Bounds.Right, thumb.IntrinsicHeight);
+
+                Control.Background = null;
 
             }
         }
