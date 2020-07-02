@@ -9,10 +9,19 @@
     Padding="0,80,0,0"
     BackgroundColor="White"
     mc:Ignorable="d">
-    <StackLayout>
-        <Button Text="reset" Clicked="Button_Clicked" />
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="auto" />
+
+            </Grid.RowDefinitions>
+
+                    <Button Text="reset" Grid.Row="0" Clicked="Button_Clicked" />
         <!-- Place new controls here -->
-        <slider:CustomGradientSlider
+            <StackLayout Grid.Row="1" >
+
+                        <slider:CustomGradientSlider
             x:Name="slider"
             HasSegment="True"
             HeightRequest="{OnPlatform Android='42',
@@ -22,12 +31,15 @@
             Maximum="100"
             MinIntervaImageSource="bluePoint"
             Minimum="0"
-            Value="50"
+            Value="0"
             TrackColor="#F9F9F9"
             TrackEndColor="#6078EA"
             TrackStartColor="#17EAD9"
             ThumbImageSource="Oval"
-            ThumbTextFormat="${0}"
-            HasShadow="True"/>
-    </StackLayout>
+            ThumbTextFormat="${0}"/>
+
+            </StackLayout>
+
+        </Grid>
+    </ScrollView>
 </ContentPage>

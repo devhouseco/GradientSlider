@@ -27,7 +27,6 @@ namespace Devhouse.GradientSlider.Droid
         }
 
         Android.Views.View thumbView;
-        private bool isInitilized = false;
         CustomGradientSlider control = null;
 
         public GradientSlider(Context context) : base(context) { }
@@ -50,34 +49,11 @@ namespace Devhouse.GradientSlider.Droid
                 Element.SetValue(Slider.ValueProperty, value);
             }
 
-            var thumb = GetThumb((int)Element.Value);
-            Control.SetThumb(thumb);
-            int thumbTop = thumb.IntrinsicHeight - Control.Height;
-            thumb.SetBounds(thumb.Bounds.Left, thumbTop + 7, thumb.Bounds.Left + thumb.IntrinsicWidth, thumb.Bounds.Bottom);
             var gradientWidth = ((Control.Width - 45) / Element.Maximum) * value;
             var pd = (LayerDrawable)Control.ProgressDrawable;
-            //var gradientLayer = pd.FindDrawableByLayerId(999);
-            //pd.SetDrawableByLayerId(999,gradientLayer);
-            //pd.SetLayerWidth(1, (int)gradientWidth);
-            //pd.InvalidateDrawable(gradientLayer);
-            //Control.Invalidate();
             var layerWidth = pd.GetLayerWidth(1);
             if (layerWidth == 0 || layerWidth != (int)gradientWidth)
                 InitilizeSeekBar(Control.Width);
-
-            //if (control.HasSegment.Equals(true))
-                //ChangeIntervalIcon();
-        }
-
-        void ChangeIntervalIcon()
-        {
-            var pd = (LayerDrawable)Control.ProgressDrawable;
-            for (int i = 2; i < pd.NumberOfLayers; i++)
-            {
-                var layer = pd.FindDrawableByLayerId(998 + i);
-                layer = (i - 2) * control.Interval < Element.Value ? Android.App.Application.Context.GetDrawable(Resource.Drawable.whitePoint) : Android.App.Application.Context.GetDrawable(Resource.Drawable.bluePoint);
-                pd.SetDrawableByLayerId(998 + i, layer);
-            }
         }
 
         public Drawable GetThumb(int progress)
@@ -96,25 +72,14 @@ namespace Devhouse.GradientSlider.Droid
         protected override void OnLayout(bool changed, int l, int t, int r, int b)
         {
             base.OnLayout(changed, l, t, r, b);
-
-            if (!isInitilized)
-                InitilizeSeekBar(Control.Width);
-
-            if (Build.VERSION.SdkInt < BuildVersionCodes.JellyBean)
-                return;
-
-            if (Control == null)
-                return;
-
-            var thumb = GetThumb((int)Element.Value);
-
-            SeekBar seekbar = Control;
-            seekbar.SetThumb(thumb);
-            seekbar.SetPadding((int)20.0f.DpToPixels(Context), thumb.IntrinsicHeight / 2, (int)20.0f.DpToPixels(Context), thumb.IntrinsicHeight / 2);
-            seekbar.SplitTrack = false;
-            seekbar.SetMinimumHeight(12);
-            int thumbTop = thumb.IntrinsicHeight - seekbar.Height;
-            thumb.SetBounds(thumb.Bounds.Left, thumbTop + 7, thumb.Bounds.Left + thumb.IntrinsicWidth, thumb.Bounds.Bottom);
+            InitilizeSeekBar(r);
+            Control.SplitTrack = false;
+            Control.SetMinimumHeight(12);
+            var thumb = Control.Thumb;
+            Control.SetPadding((int)20.0f.DpToPixels(Context), thumb.IntrinsicHeight / 2, (int)20.0f.DpToPixels(Context), thumb.IntrinsicHeight / 2);
+            int thumbTop = thumb.IntrinsicHeight - b;
+            var bounds = new Rect(thumb.Bounds.Left, thumbTop + 7, thumb.Bounds.Left + thumb.IntrinsicWidth, thumb.Bounds.Bottom);
+            thumb.SetBounds(bounds.Left, bounds.Top, bounds.Right, bounds.Bottom);
         }
 
         void InitilizeSeekBar(int width)
@@ -191,8 +156,6 @@ namespace Devhouse.GradientSlider.Droid
                 }
 
                 Control.ProgressDrawable = pd;
-                //Control.Progress = Control.Progress + 1;
-                //Control.Progress = Control.Progress - 1;
                 LayoutInflater inflater = (LayoutInflater)Android.App.Application.Context.GetSystemService(Context.LayoutInflaterService);
                 thumbView = inflater.Inflate(Resource.Layout.layout_seekbar_thumb, null, false);
 
@@ -205,12 +168,7 @@ namespace Devhouse.GradientSlider.Droid
                 var thumbViewIcon = ((LinearLayout)thumbView.FindViewById(Resource.Id.seekBarIcon));
                 thumbViewIcon.SetBackgroundDrawable(Android.App.Application.Context.GetDrawable(iconName));
 
-                isInitilized = true;
-
-                if (control.HasSegment)
-                    ChangeIntervalIcon();
-
-                //Element_ValueChanged(this,new ValueChangedEventArgs(Element.Value,Element.Value));
+                Control.SetThumb(GetThumb((int)Element.Value));
 
             }
         }
