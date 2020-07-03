@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata minClientVersion="2.8.3">
     <id>GradientSlider</id>
-    <version>1.0.1</version>
+    <version>1.0.7</version>
     <title>GradientSlider for Xamarin.Forms</title>
     <authors>Hassan Tariq, Ali Ahmad, Saif Ur Rehman, Umair Ahmad</authors>
     <owners>Devhouse.co</owners>
