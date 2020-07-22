@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
-using Android.OS;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
@@ -32,7 +30,7 @@ namespace Devhouse.GradientSlider.Droid
 
         public GradientSlider(Context context) : base(context) { }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<Slider> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Slider> e)
         {
             base.OnElementChanged(e);
 
@@ -40,14 +38,14 @@ namespace Devhouse.GradientSlider.Droid
             Element.ValueChanged += Element_ValueChanged;
         }
 
-        private void Element_ValueChanged(object sender, ValueChangedEventArgs e)
+        private void Element_ValueChanged(object sender, Xamarin.Forms.ValueChangedEventArgs e)
         {
             var value = Element.Value;
 
             if (control.HasSegment)
             {
                 value = (int)(Math.Round(Element.Value / control.Interval) * control.Interval);
-                Element.SetValue(Slider.ValueProperty, value);
+                Element.SetValue(Xamarin.Forms.Slider.ValueProperty, value);
             }
 
             var gradientWidth = ((Control.Width - 45) / Element.Maximum) * value;
@@ -73,14 +71,17 @@ namespace Devhouse.GradientSlider.Droid
         protected override void OnLayout(bool changed, int l, int t, int r, int b)
         {
             base.OnLayout(changed, l, t, r, b);
-            InitilizeSeekBar(Control.Width);
             Control.SplitTrack = false;
             var thumb = Control.Thumb;
             Control.SetMinimumHeight(thumb.IntrinsicHeight);
-            //var paddingTopBottom = (thumb.IntrinsicHeight - 12) / 2;
             Control.SetPadding((int)20.0f.DpToPixels(Context), 0, (int)20.0f.DpToPixels(Context), 0);
-            int thumbTop = (int)((thumb.IntrinsicHeight - 12f.DpToPixels(Context)) / 2);
-            thumb.SetBounds(0, 0, thumb.Bounds.Left + thumb.IntrinsicWidth, thumb.IntrinsicHeight);
+            thumb.SetBounds(thumb.Bounds.Left, 0, thumb.Bounds.Right, thumb.IntrinsicHeight);
+        }
+
+        protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
+        {
+            base.OnSizeChanged(w, h, oldw, oldh);
+            InitilizeSeekBar(w);
         }
 
         void InitilizeSeekBar(int width, bool valueChnaged = false)
@@ -101,7 +102,6 @@ namespace Devhouse.GradientSlider.Droid
                 //create minimum track
                 var p = new GradientDrawable(GradientDrawable.Orientation.LeftRight, new int[] { startColor, endColor });
                 p.SetCornerRadius(cornerRadiusInPx);
-                //var progress = new ClipDrawable(p, GravityFlags.Left, ClipDrawableOrientation.Horizontal);
 
                 //create maximum track
                 var background = new GradientDrawable();
@@ -164,7 +164,7 @@ namespace Devhouse.GradientSlider.Droid
                 thumbText.TextSize = (float)control.ThumbTextFontSize;
                 thumbText.SetTextColor(Android.Graphics.Color.White);
 
-                var iconName = (control.ThumbImageSource as FileImageSource).File;
+                var iconName = (control.ThumbImageSource as Xamarin.Forms.FileImageSource).File;
 
                 var thumbViewIcon = ((LinearLayout)thumbView.FindViewById(Resource.Id.seekBarIcon));
                 thumbViewIcon.SetBackgroundDrawable(Android.App.Application.Context.GetDrawable(iconName));
